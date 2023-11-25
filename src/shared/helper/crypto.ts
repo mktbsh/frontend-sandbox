@@ -5,7 +5,7 @@ const generateKey = async (): Promise<CryptoKey> => {
   return await crypto.subtle.generateKey(
     { name: ALGO, length: 256 },
     true,
-    KEY_USAGES
+    KEY_USAGES,
   );
 };
 
@@ -15,7 +15,7 @@ const importFrom = async (jwk: JsonWebKey) => {
     jwk,
     { name: ALGO },
     true,
-    KEY_USAGES
+    KEY_USAGES,
   );
 };
 
@@ -24,7 +24,7 @@ export const cryptoAESGCM = (jwk?: JsonWebKey) => {
     window.crypto
       .randomUUID()
       .split("")
-      .map((v) => v.charCodeAt(0))
+      .map((v) => v.charCodeAt(0)),
   );
 
   const promise = jwk ? importFrom(jwk) : generateKey();
@@ -42,7 +42,7 @@ export const cryptoAESGCM = (jwk?: JsonWebKey) => {
     const buffer = await crypto.subtle.encrypt(
       { name: ALGO, iv },
       secretKey,
-      data
+      data,
     );
     return {
       buffer,
@@ -52,7 +52,7 @@ export const cryptoAESGCM = (jwk?: JsonWebKey) => {
 
   const decrypt = async (
     data: BufferSource,
-    iv: BufferSource
+    iv: BufferSource,
   ): Promise<ArrayBuffer> => {
     return await crypto.subtle.decrypt({ name: ALGO, iv }, secretKey, data);
   };
