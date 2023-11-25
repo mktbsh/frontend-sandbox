@@ -1,5 +1,7 @@
 ---
-import '@/styles/globals.css'
+import "@/styles/globals.css";
+import { Toolbar } from "@/features/toolbar";
+
 export interface Props {
   title: string;
 }
@@ -17,32 +19,20 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
-    <slot />
+    <div class="md:hidden">
+      <img
+        src="https://picsum.photos/768/1280"
+        width={768}
+        height={1280}
+        alt="Music"
+        class="block max-h-full w-auto"
+      />
+    </div>
+    <div class="hidden md:block md:h-full md:w-full md:overflow-hidden">
+      <Toolbar client:load />
+      <div class="border-t">
+        <slot />
+      </div>
+    </div>
   </body>
 </html>
-<style is:global>
-  :root {
-    --accent: 124, 58, 237;
-    --accent-gradient: linear-gradient(
-      45deg,
-      rgb(var(--accent)),
-      #da62c4 30%,
-      white 60%
-    );
-  }
-  html {
-    font-family: system-ui, sans-serif;
-    background-color: #f6f6f6;
-  }
-  code {
-    font-family:
-      Menlo,
-      Monaco,
-      Lucida Console,
-      Liberation Mono,
-      DejaVu Sans Mono,
-      Bitstream Vera Sans Mono,
-      Courier New,
-      monospace;
-  }
-</style>
